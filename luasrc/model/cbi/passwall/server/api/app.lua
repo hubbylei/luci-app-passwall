@@ -63,10 +63,12 @@ local function gen_include()
         f:write(ipt_bin .. '-restore -n <<-EOT' .. "\n")
         f:write(extract_rules("4", "filter") .. "\n")
         f:write("EOT" .. "\n")
-        f:write(ip6t_bin .. '-save -c | grep -v "PSW-SERVER" | ' .. ip6t_bin .. '-restore -c' .. "\n")
-        f:write(ip6t_bin .. '-restore -n <<-EOT' .. "\n")
-        f:write(extract_rules("6", "filter") .. "\n")
-        f:write("EOT" .. "\n")
+		if ip6t_bin ~= "" then
+			f:write(ip6t_bin .. '-save -c | grep -v "PSW-SERVER" | ' .. ip6t_bin .. '-restore -c' .. "\n")
+			f:write(ip6t_bin .. '-restore -n <<-EOT' .. "\n")
+			f:write(extract_rules("6", "filter") .. "\n")
+			f:write("EOT" .. "\n")
+		end
         f:close()
     end
 end
