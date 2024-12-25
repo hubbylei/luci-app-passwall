@@ -17,7 +17,7 @@ jobs:
 
       - name: Get repo
         run: |
-          git clone https://github.com/${{ env.repo }}.git temp
+          git clone --depth 1 https://github.com/${{ env.repo }}.git temp
           rm -rf luci-app-passwall 2>/dev/null
           cp -rf temp/luci-app-passwall ./
           rm -rf temp
