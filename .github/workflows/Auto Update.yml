@@ -1,0 +1,48 @@
+name: "Auto Update"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+env:
+  TZ: Asia/Shanghai
+  repo: xiaorouji/openwrt-passwall
+
+
+jobs:
+  Update:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Get repo
+        run: |
+          git clone https://github.com/${{ env.repo }}.git temp
+          rm -rf luci-app-passwall 2>/dev/null
+          cp -rf temp/luci-app-passwall ./
+          rm -rf temp
+
+      - name: Creat Message
+        id: msg
+        run: |
+            echo "commit_message=Update $(date +"%Y-%m-%d %H:%M:%S")" >> "$GITHUB_OUTPUT"
+ 
+      - name: Apply Change
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+         commit_message: ${{ steps.msg.outputs.commit_message }}
+         branch: main
+         commit_user_name: hubbylei
+         commit_user_email: hubbylei@hubbylei.dynu.net
+         commit_author: hubbylei <hubbylei@hubbylei.dynu.net>
+
+      - name: Auto compile
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: Auto compile
+
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 0
+          keep_minimum_runs: 1
