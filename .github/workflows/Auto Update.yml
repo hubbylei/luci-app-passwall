@@ -41,7 +41,7 @@ jobs:
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: peter-evans/repository-dispatch@v3
         with:
-          event-type: Auto compile
+          event-type: Auto Compile
 
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
