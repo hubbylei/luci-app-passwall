@@ -1,7 +1,7 @@
 name: "Auto compile with openwrt sdk"
 on:
   repository_dispatch:
-    types: [Auto compile]
+    types: [Auto Compile]
   workflow_dispatch:
     inputs:
       ssh:
