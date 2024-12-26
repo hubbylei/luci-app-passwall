@@ -1,4 +1,4 @@
-name: "Auto compile with openwrt sdk"
+name: "Auto Compile"
 on:
   repository_dispatch:
     types: [Auto Compile]
