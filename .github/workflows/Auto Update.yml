@@ -5,7 +5,7 @@ on:
     - cron: "0 * * * *"
 env:
   TZ: Asia/Shanghai
-  repo: xiaorouji/openwrt-passwall
+  repo: Openwrt-Passwall/openwrt-passwall
 
 
 jobs:
