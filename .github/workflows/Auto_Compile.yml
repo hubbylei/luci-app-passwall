@@ -13,6 +13,7 @@ env:
   passwall: ${{ github.repository }}
   packages: Openwrt-Passwall/openwrt-passwall-packages
   package_names: "chinadns-ng dns2socks geoview hysteria ipt2socks microsocks naiveproxy tcping trojan-plus tuic-client shadowsocksr-libev simple-obfs sing-box v2ray-geodata xray-core"
+  go: 27.x
 
 
 jobs:
@@ -115,7 +116,7 @@ jobs:
           echo "src-git passwall https://github.com/${{ env.passwall }}.git;${{ github.ref_name }}" >> feeds.conf
 
           rm -rf feeds/packages/lang/golang
-          git clone https://github.com/sbwml/packages_lang_golang -b 27.x feeds/packages/lang/golang
+          git clone https://github.com/sbwml/packages_lang_golang -b ${{ env.go }} feeds/packages/lang/golang
           
           ./scripts/feeds update -a
           echo "CONFIG_PACKAGE_luci-app-passwall=m" > .config
@@ -281,7 +282,7 @@ jobs:
           ./scripts/feeds install luci-app-passwall
 
           rm -rf feeds/packages/lang/golang
-          git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
+          git clone https://github.com/sbwml/packages_lang_golang -b ${{ env.go }} feeds/packages/lang/golang
 
           echo "CONFIG_ALL_NONSHARED=n" > .config
           echo "CONFIG_ALL_KMODS=n" >> .config
